@@ -1,0 +1,7 @@
+.button {
+    @apply rounded-[10px] flex justify-center items-center
+}
+
+.button:hover {
+    @apply opacity-70
+}
