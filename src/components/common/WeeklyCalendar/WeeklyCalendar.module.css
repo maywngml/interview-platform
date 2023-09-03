@@ -1,0 +1,27 @@
+.calendar {
+  @apply bg-white h-[calc(100vh-235px)] p-[55px] rounded-[10px];
+}
+
+.header {
+  @apply flex justify-center items-center gap-[10px] leading-normal;
+}
+
+.month {
+  @apply text-[25px] font-bold;
+}
+
+.arrow {
+  @apply text-green cursor-pointer;
+}
+
+.table {
+  @apply mt-[55px] w-full h-[calc(100%-92px)] border-solid border-t-[1px] border-gray-100;
+}
+
+.date {
+  @apply font-normal text-[16px] p-[10px] border-solid border-r-[1px] border-gray-100 first:text-red-500 last:border-none;
+}
+
+.schedule {
+  @apply border-solid border-r-[1px] border-gray-100 last:border-none;
+}
