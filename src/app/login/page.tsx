@@ -27,7 +27,7 @@ export default function Login() {
         <main className='py-[122px]'>
             <div className='bg-white rounded-[30px] px-[50px] pt-[90px] pb-[150px] max-w-[430px] mx-auto'>
                 {/* TODO: 추후 회사로고로 변경 */}
-                <div className='rounded-full bg-gray-200 w-[100px] h-[100px] mb-[60px] mx-auto' />
+                <div className='rounded-full bg-gray-600 w-[100px] h-[100px] mb-[60px] mx-auto' />
                 <form onSubmit={handleSubmit}>
                     <p className='font-bold text-[18px] leading-normal mb-[10px]'>{label}</p>
                     <TextInput className='mb-[10px] w-[330px] h-[45px]' value={id} changeValue={setId} />

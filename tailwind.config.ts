@@ -9,10 +9,15 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'gray-100': '#F5F5FA',
-        'gray-200': '#AFAEBF',
-        'gray-300': '7E7E8F',
-        'green': '#2DCE9B',
+        'gray-100': 'var(--gray-100)',
+        'gray-200': 'var(--gray-200)',
+        'gray-300': 'var(--gray-300)',
+        'gray-400': 'var(--gray-400)',
+        'gray-500': 'var(--gray-500)',
+        'gray-600': 'var(--gray-600)',
+        'gray-700': 'var(--gray-700)',
+        'gray-800': 'var(--gray-800)',
+        'green': 'var(--green)',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
