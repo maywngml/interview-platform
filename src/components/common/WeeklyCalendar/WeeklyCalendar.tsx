@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import cn from 'clsx';
 import {
   format,
   addWeeks,
@@ -24,12 +25,26 @@ export default function WeeklyCalendar() {
   const [currentLastWeekDay, setCurrentLastWeekDay] = useState<Date>(
     lastDayOfWeek(currentMonth)
   );
-  const todayMonth = new Date();
+  const today = new Date();
 
   const changeCurrentMonth = (month: Date) => {
     setCurrentMonth(month);
     setCurrentStartWeekDay(startOfWeek(month));
     setCurrentLastWeekDay(lastDayOfWeek(month));
+  };
+
+  const getCalendarMonth = (startWeekDay: Date, lastWeekDay: Date) => {
+    const startWeekMonth = format(startWeekDay, 'M');
+    const lastWeekMonth = format(lastWeekDay, 'M');
+    if (startWeekMonth === lastWeekMonth) {
+      return `${startWeekMonth}월`;
+    } else {
+      return `${startWeekMonth}월 - ${lastWeekMonth}월`;
+    }
+  };
+
+  const isToday = (renderDate: Date) => {
+    return format(renderDate, 'yyyy-MM-dd') === format(today, 'yyyy-MM-dd');
   };
 
   const handleClickLeftArrow = () => {
@@ -43,26 +58,16 @@ export default function WeeklyCalendar() {
   };
 
   const handleClickToday = () => {
-    changeCurrentMonth(todayMonth);
-  };
-
-  const getCalendarMonth = (startWeekDay: Date, lastWeekDay: Date) => {
-    const startWeekMonth = format(startWeekDay, 'M');
-    const lastWeekMonth = format(lastWeekDay, 'M');
-    if (startWeekMonth === lastWeekMonth) {
-      return `${startWeekMonth}월`;
-    } else {
-      return `${startWeekMonth}월 - ${lastWeekMonth}월`;
-    }
+    changeCurrentMonth(today);
   };
 
   useEffect(() => {
-    console.log(currentStartWeekDay, currentLastWeekDay);
-  }, [currentStartWeekDay, currentLastWeekDay]);
+    console.log(currentStartWeekDay, currentLastWeekDay, today);
+  }, [currentStartWeekDay, currentLastWeekDay, today]);
 
   return (
     <div className={s.calendar}>
-      <div className={s.header}>
+      <div className={s.monthView}>
         <ArrowBackIosNewIcon
           className={s.arrow}
           onClick={handleClickLeftArrow}
@@ -77,7 +82,7 @@ export default function WeeklyCalendar() {
         />
       </div>
       <Button
-        className={s.today}
+        className={s.todayButton}
         onClick={handleClickToday}
       >
         today
@@ -85,15 +90,25 @@ export default function WeeklyCalendar() {
       <table className={s.table}>
         <thead>
           <tr>
-            {date.map((text, index) => (
-              <th
-                className={s.date}
-                key={`th-${index}`}
-              >
-                <p>{text}</p>
-                <p>{+format(addDays(currentStartWeekDay, index), 'dd')}</p>
-              </th>
-            ))}
+            {date.map((text, index) => {
+              const renderDate = addDays(currentStartWeekDay, index);
+              return (
+                <th
+                  className={s.header}
+                  key={`th-${index}`}
+                >
+                  <p>{text}</p>
+                  <div
+                    className={cn(
+                      s.dateWrapper,
+                      isToday(renderDate) && s.today
+                    )}
+                  >
+                    <p className={s.date}>{+format(renderDate, 'dd')}</p>
+                  </div>
+                </th>
+              );
+            })}
           </tr>
         </thead>
         <tbody>
