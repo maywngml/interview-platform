@@ -5,7 +5,7 @@ export default function HRLayout({ children }: { children: React.ReactNode }) {
     <div>
       <Header></Header>
       <Sidebar></Sidebar>
-      <section className='w-[calc(100%-300px)] float-right'>{children}</section>
+      <section className='w-[calc(100%-280px)] float-right'>{children}</section>
     </div>
   );
 }

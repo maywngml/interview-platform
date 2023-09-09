@@ -1,31 +1,31 @@
 .sidebar {
-    @apply fixed left-0 top-0 w-[300px] h-[100vh] bg-white border-solid border-r-[1px] border-gray-300 p-[30px]
+  @apply fixed left-0 top-0 w-[280px] h-[100vh] bg-white border-solid border-r-[1px] border-gray-300 p-[30px];
 }
 
 .company {
-    @apply flex gap-[20px] items-center;
+  @apply flex gap-[20px] items-center;
 }
 
 .logo {
-    @apply w-[60px] h-[60px] bg-gray-500 rounded-full;
+  @apply w-[60px] h-[60px] bg-gray-500 rounded-full;
 }
 
 .name {
-    @apply text-[24px] text-gray-800 font-bold leading-normal
+  @apply text-[22px] text-gray-800 font-bold leading-normal;
 }
 
 .menuWrapper {
-    @apply mt-[64px]
-}   
+  @apply mt-[64px];
+}
 
 .menu {
-    @apply flex gap-[10px] items-center font-bold bg-transparent text-gray-800 text-[20px] p-[15px]
+  @apply flex gap-[10px] items-center font-bold bg-transparent text-gray-800 text-[18px] p-[13px];
 }
 
 .menu.selected {
-    @apply bg-green text-white rounded-[10px]
+  @apply bg-green text-white rounded-[10px];
 }
 
 .icon {
-    @apply w-[35px] h-[35px]
+  @apply w-[35px] h-[35px];
 }
