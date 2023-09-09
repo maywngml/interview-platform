@@ -15,7 +15,7 @@
 }
 
 .table {
-  @apply mt-[55px] w-full h-[calc(100%-92px)] border-solid border-t-[1px] border-gray-100;
+  @apply mt-[10px] w-full h-[calc(100%-92px)] border-solid border-t-[1px] border-gray-100;
 }
 
 .date {
@@ -24,4 +24,8 @@
 
 .schedule {
   @apply border-solid border-r-[1px] border-gray-100 last:border-none;
+}
+
+.today {
+  @apply uppercase font-bold text-[18px] mt-[28px];
 }

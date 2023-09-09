@@ -1,8 +1,16 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { format, addWeeks, subWeeks, startOfWeek, addDays } from 'date-fns';
+import {
+  format,
+  addWeeks,
+  subWeeks,
+  startOfWeek,
+  lastDayOfWeek,
+  addDays,
+} from 'date-fns';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { Button } from 'src/components/ui';
 import { date } from 'src/data/utils/WeeklyCalendar';
 import s from './WeeklyCalendar.module.css';
 
@@ -10,43 +18,70 @@ import s from './WeeklyCalendar.module.css';
 export default function WeeklyCalendar() {
   const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-  const [startWeekDay, setStartWeekDay] = useState<Date>(
+  const [currentStartWeekDay, setCurrentStartWeekDay] = useState<Date>(
     startOfWeek(currentMonth)
   );
+  const [currentLastWeekDay, setCurrentLastWeekDay] = useState<Date>(
+    lastDayOfWeek(currentMonth)
+  );
+  const todayMonth = new Date();
 
-  const handleLeftArrowClick = () => {
-    const prevMonth = subWeeks(currentMonth, 1);
-    setCurrentMonth(prevMonth);
-    setStartWeekDay(startOfWeek(prevMonth));
+  const changeCurrentMonth = (month: Date) => {
+    setCurrentMonth(month);
+    setCurrentStartWeekDay(startOfWeek(month));
+    setCurrentLastWeekDay(lastDayOfWeek(month));
   };
 
-  const handleRightArrowClick = () => {
+  const handleClickLeftArrow = () => {
+    const prevMonth = subWeeks(currentMonth, 1);
+    changeCurrentMonth(prevMonth);
+  };
+
+  const handleClickRightArrow = () => {
     const nextMonth = addWeeks(currentMonth, 1);
-    setCurrentMonth(nextMonth);
-    setStartWeekDay(startOfWeek(nextMonth));
+    changeCurrentMonth(nextMonth);
+  };
+
+  const handleClickToday = () => {
+    changeCurrentMonth(todayMonth);
+  };
+
+  const getCalendarMonth = (startWeekDay: Date, lastWeekDay: Date) => {
+    const startWeekMonth = format(startWeekDay, 'M');
+    const lastWeekMonth = format(lastWeekDay, 'M');
+    if (startWeekMonth === lastWeekMonth) {
+      return `${startWeekMonth}월`;
+    } else {
+      return `${startWeekMonth}월 - ${lastWeekMonth}월`;
+    }
   };
 
   useEffect(() => {
-    console.log(`${format(addDays(currentMonth, 1), 'yyyy-MM-dd')}`);
-
-    console.log(`${format(currentMonth, 'yyyy-MM-dd')}`, startWeekDay);
-  }, [currentMonth]);
+    console.log(currentStartWeekDay, currentLastWeekDay);
+  }, [currentStartWeekDay, currentLastWeekDay]);
 
   return (
     <div className={s.calendar}>
       <div className={s.header}>
         <ArrowBackIosNewIcon
           className={s.arrow}
-          onClick={handleLeftArrowClick}
+          onClick={handleClickLeftArrow}
         />
         <p className={s.month}>
-          {format(currentMonth, 'yyyy')}년 {format(currentMonth, 'M')}월
+          {format(currentMonth, 'yyyy')}년{' '}
+          {getCalendarMonth(currentStartWeekDay, currentLastWeekDay)}
         </p>
         <ArrowForwardIosIcon
           className={s.arrow}
-          onClick={handleRightArrowClick}
+          onClick={handleClickRightArrow}
         />
       </div>
+      <Button
+        className={s.today}
+        onClick={handleClickToday}
+      >
+        today
+      </Button>
       <table className={s.table}>
         <thead>
           <tr>
@@ -56,7 +91,7 @@ export default function WeeklyCalendar() {
                 key={`th-${index}`}
               >
                 <p>{text}</p>
-                <p>{+format(addDays(startWeekDay, index), 'dd')}</p>
+                <p>{+format(addDays(currentStartWeekDay, index), 'dd')}</p>
               </th>
             ))}
           </tr>
