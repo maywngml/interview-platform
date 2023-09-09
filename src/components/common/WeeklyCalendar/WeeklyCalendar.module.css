@@ -19,11 +19,11 @@
 }
 
 .header {
-  @apply font-normal text-[16px] p-[10px] border-solid border-r-[1px] border-gray-100 first:text-red-500 last:border-none;
+  @apply font-normal text-[14px] p-[10px] border-solid border-r-[1px] border-gray-100 first:text-red-500 last:border-none;
 }
 
 .dateWrapper {
-  @apply rounded-full w-[26px] h-[26px] mx-auto;
+  @apply rounded-full w-[26px] h-[26px] mx-auto text-[14px];
 }
 
 .dateWrapper.today {
@@ -31,9 +31,9 @@
 }
 
 .schedule {
-  @apply border-solid border-r-[1px] border-gray-100 last:border-none;
+  @apply border-solid border-r-[1px] text-center align-top w-[150px] text-[14px] overflow-hidden whitespace-nowrap border-gray-100 last:border-none;
 }
 
 .todayButton {
-  @apply uppercase font-bold text-[18px] mt-[28px];
+  @apply uppercase font-bold text-[18px] mt-[10px];
 }

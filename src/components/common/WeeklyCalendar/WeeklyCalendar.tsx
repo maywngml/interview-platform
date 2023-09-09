@@ -27,6 +27,30 @@ export default function WeeklyCalendar() {
   );
   const today = new Date();
 
+  type scheduleType = {
+    [key: string]: string[];
+  };
+  const tempDate1 = '20230911';
+  const tempDate2 = '20230913';
+  const tempSchedule: scheduleType = {
+    [tempDate1]: [
+      '10:00 ~ 11:00 3면접',
+      '11:00 ~ 12:00 3면접',
+      '12:00 ~ 13:00 3면접',
+      '13:00 ~ 14:00 3면접',
+      '14:00 ~ 15:00 3면접',
+      '14:00 ~ 15:00 3면접',
+      '14:00 ~ 15:00 3면접',
+      '14:00 ~ 15:00 3면접',
+    ],
+    [tempDate2]: [
+      '10:00 ~ 11:00 3면접',
+      '11:00 ~ 12:00 3면접',
+      '12:00 ~ 13:00 3면접',
+      '13:00 ~ 14:00 3면접',
+    ],
+  };
+
   const changeCurrentMonth = (month: Date) => {
     setCurrentMonth(month);
     setCurrentStartWeekDay(startOfWeek(month));
@@ -113,9 +137,28 @@ export default function WeeklyCalendar() {
         </thead>
         <tbody>
           <tr>
-            {Array.from({ length: 7 }, (_, index) => index + 1).map((row) => {
-              return <td className={s.schedule}></td>;
-            })}
+            {Array.from({ length: 7 }, (_, index) => index + 1).map(
+              (row, rowIndex) => {
+                const renderDate = format(
+                  addDays(currentStartWeekDay, rowIndex),
+                  'yyyyMMdd'
+                );
+                return (
+                  <td
+                    className={s.schedule}
+                    key={`td-${rowIndex}`}
+                  >
+                    {tempSchedule[renderDate]?.map(
+                      (schedule, scheduleIndex) => (
+                        <p key={`schedule-${renderDate}-${scheduleIndex}`}>
+                          {schedule}
+                        </p>
+                      )
+                    )}
+                  </td>
+                );
+              }
+            )}
           </tr>
         </tbody>
       </table>
