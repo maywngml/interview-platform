@@ -26,7 +26,7 @@ export default function Sidebar() {
           <li key={`menu-${id}`}>
             <Link
               className={cn(
-                'flex gap-[10px] items-center font-bold bg-transparent text-gray-800 text-[18px] p-[13px]',
+                'flex gap-[10px] items-center font-bold text-gray-800 text-[18px] p-[13px]',
                 selectedMenuId === id && 'bg-green text-white rounded-[10px]'
               )}
               href={href}
