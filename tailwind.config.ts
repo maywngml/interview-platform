@@ -50,6 +50,7 @@ const config: Config = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        'gray-50': 'rgb(var(--gray-50));',
         'gray-100': 'var(--gray-100)',
         'gray-200': 'var(--gray-200)',
         'gray-300': 'var(--gray-300)',
