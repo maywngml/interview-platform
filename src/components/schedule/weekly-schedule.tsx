@@ -21,10 +21,10 @@ import { selectOptionType } from 'src/types/utils/selectOption';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Button } from 'src/components/ui';
-import { date } from 'src/data/utils/WeeklyCalendar';
+import { date } from 'src/data/schedule/weekly-schedule';
 
 // TODO: 스케줄 가져오는 함수를 props로 받도록 해야 함
-export default function WeeklyCalendar() {
+export default function WeeklySchedule() {
   const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [currentStartWeekDay, setCurrentStartWeekDay] = useState<Date>(
@@ -82,7 +82,7 @@ export default function WeeklyCalendar() {
     setCurrentLastWeekDay(lastDayOfWeek(month));
   };
 
-  const getCalendarMonth = (startWeekDay: Date, lastWeekDay: Date) => {
+  const getScheduleMonth = (startWeekDay: Date, lastWeekDay: Date) => {
     const startWeekMonth = format(startWeekDay, 'M');
     const lastWeekMonth = format(lastWeekDay, 'M');
     if (startWeekMonth === lastWeekMonth) {
@@ -110,8 +110,8 @@ export default function WeeklyCalendar() {
     changeCurrentMonth(today);
   };
 
-  const handleClickMore = () => {
-    console.log('click');
+  const handleClickMore = (selectedDate: string) => {
+    console.log(selectedDate);
   };
 
   useEffect(() => {
@@ -127,7 +127,7 @@ export default function WeeklyCalendar() {
         />
         <p className='text-[25px] font-bold'>
           {format(currentMonth, 'yyyy')}년{' '}
-          {getCalendarMonth(currentStartWeekDay, currentLastWeekDay)}
+          {getScheduleMonth(currentStartWeekDay, currentLastWeekDay)}
         </p>
         <ArrowForwardIosIcon
           className='text-green cursor-pointer'
@@ -202,12 +202,12 @@ export default function WeeklyCalendar() {
                         </p>
                       ))}
                     {tempSchedule[renderDate]?.length > 6 && (
-                      <p
+                      <Button
                         className='font-bold mt-[15px]'
-                        onClick={handleClickMore}
+                        onClick={() => handleClickMore(renderDate)}
                       >
                         더보기
-                      </p>
+                      </Button>
                     )}
                   </td>
                 );
