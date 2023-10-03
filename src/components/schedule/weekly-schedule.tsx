@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import cn from 'clsx';
 import {
   format,
@@ -20,7 +21,7 @@ import {
 import { selectOptionType } from 'src/types/utils/selectOption';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { Button } from 'src/components/ui';
+import { Button } from '../ui';
 import { date } from 'src/data/schedule/weekly-schedule';
 
 // TODO: 스케줄 가져오는 함수를 props로 받도록 해야 함
@@ -38,8 +39,8 @@ export default function WeeklySchedule() {
   type scheduleType = {
     [key: string]: string[];
   };
-  const tempDate1 = '20230911';
-  const tempDate2 = '20230913';
+  const tempDate1 = '2023-10-03';
+  const tempDate2 = '2023-10-05';
   const tempSchedule: scheduleType = {
     [tempDate1]: [
       '10:00 ~ 11:00 3면접',
@@ -108,10 +109,6 @@ export default function WeeklySchedule() {
 
   const handleClickToday = () => {
     changeCurrentMonth(today);
-  };
-
-  const handleClickMore = (selectedDate: string) => {
-    console.log(selectedDate);
   };
 
   useEffect(() => {
@@ -187,7 +184,7 @@ export default function WeeklySchedule() {
               (row, rowIndex) => {
                 const renderDate = format(
                   addDays(currentStartWeekDay, rowIndex),
-                  'yyyyMMdd'
+                  'yyyy-MM-dd'
                 );
                 return (
                   <td
@@ -202,12 +199,13 @@ export default function WeeklySchedule() {
                         </p>
                       ))}
                     {tempSchedule[renderDate]?.length > 6 && (
-                      <Button
+                      <Link
+                        href={`/hr/schedule/?date=${renderDate}`}
                         className='font-bold mt-[15px]'
-                        onClick={() => handleClickMore(renderDate)}
+                        scroll={false}
                       >
                         더보기
-                      </Button>
+                      </Link>
                     )}
                   </td>
                 );
