@@ -18,7 +18,7 @@ export default function Button(props: ButtonProps) {
     <button
       className={cn(
         className,
-        'rounded-[10px] flex justify-center items-center hover:opacity-70'
+        'rounded-[10px] flex justify-center items-center outline-none hover:opacity-70'
       )}
       type={type}
       {...rest}
