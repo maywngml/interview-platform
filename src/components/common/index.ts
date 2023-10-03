@@ -1,3 +1,3 @@
-export { default as Header } from './Header'
-export { default as Sidebar } from './Sidebar'
-export { default as WeeklyCalendar } from './WeeklyCalendar'
+export { default as Header } from './header';
+export { default as Sidebar } from './sidebar';
+export { default as WeeklyCalendar } from './weekly-calendar';

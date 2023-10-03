@@ -9,11 +9,19 @@ import {
   lastDayOfWeek,
   addDays,
 } from 'date-fns';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  SelectGroup,
+} from 'src/components/ui/select';
+import { selectOptionType } from 'src/types/utils/selectOption';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Button } from 'src/components/ui';
 import { date } from 'src/data/utils/WeeklyCalendar';
-import s from './WeeklyCalendar.module.css';
 
 // TODO: 스케줄 가져오는 함수를 props로 받도록 해야 함
 export default function WeeklyCalendar() {
@@ -50,6 +58,23 @@ export default function WeeklyCalendar() {
       '13:00 ~ 14:00 3면접',
     ],
   };
+  const tempOptions: selectOptionType[] = [
+    {
+      key: 'ai',
+      name: 'AI',
+      value: 'ai',
+    },
+    {
+      key: 'web',
+      name: 'WEB',
+      value: 'web',
+    },
+    {
+      key: 'db',
+      name: 'DB',
+      value: 'db',
+    },
+  ];
 
   const changeCurrentMonth = (month: Date) => {
     setCurrentMonth(month);
@@ -85,50 +110,71 @@ export default function WeeklyCalendar() {
     changeCurrentMonth(today);
   };
 
+  const handleClickMore = () => {
+    console.log('click');
+  };
+
   useEffect(() => {
     console.log(currentStartWeekDay, currentLastWeekDay, today);
   }, [currentStartWeekDay, currentLastWeekDay, today]);
 
   return (
-    <div className={s.calendar}>
-      <div className={s.monthView}>
+    <div className='bg-white relative h-[calc(100vh-235px)] p-[55px] rounded-[10px]'>
+      <div className='flex justify-center items-center gap-[10px] leading-normal'>
         <ArrowBackIosNewIcon
-          className={s.arrow}
+          className='text-green cursor-pointer'
           onClick={handleClickLeftArrow}
         />
-        <p className={s.month}>
+        <p className='text-[25px] font-bold'>
           {format(currentMonth, 'yyyy')}년{' '}
           {getCalendarMonth(currentStartWeekDay, currentLastWeekDay)}
         </p>
         <ArrowForwardIosIcon
-          className={s.arrow}
+          className='text-green cursor-pointer'
           onClick={handleClickRightArrow}
         />
       </div>
+      <Select>
+        <SelectTrigger className='absolute top-[50px] right-[55px] w-[130px]'>
+          <SelectValue placeholder='직군 선택' />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            {tempOptions.map(({ key, name, value }) => (
+              <SelectItem
+                key={key}
+                value={value}
+              >
+                {name}
+              </SelectItem>
+            ))}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
       <Button
-        className={s.todayButton}
+        className='uppercase font-bold text-[18px] mt-[10px]'
         onClick={handleClickToday}
       >
         today
       </Button>
-      <table className={s.table}>
+      <table className='mt-[10px] w-full h-[calc(100%-92px)] border-solid border-t-[1px] border-gray-100'>
         <thead>
           <tr>
             {date.map((text, index) => {
               const renderDate = addDays(currentStartWeekDay, index);
               return (
                 <th
-                  className={s.header}
+                  className='font-normal text-[14px] p-[10px] border-solid border-r-[1px] border-gray-100 first:text-red-500 last:border-none'
                   key={`th-${index}`}
                 >
                   <p>{text}</p>
                   <div
                     className={cn(
-                      s.dateWrapper,
-                      isToday(renderDate) && s.today
+                      'rounded-full w-[26px] h-[26px] mx-auto text-[14px]',
+                      isToday(renderDate) && 'bg-green text-white'
                     )}
                   >
-                    <p className={s.date}>{+format(renderDate, 'dd')}</p>
+                    <p>{+format(renderDate, 'dd')}</p>
                   </div>
                 </th>
               );
@@ -145,15 +191,23 @@ export default function WeeklyCalendar() {
                 );
                 return (
                   <td
-                    className={s.schedule}
+                    className='border-solid border-r-[1px] px-[20px] text-left align-top w-[150px] text-[14px] overflow-hidden whitespace-nowrap border-gray-100 last:border-none'
                     key={`td-${rowIndex}`}
                   >
-                    {tempSchedule[renderDate]?.map(
-                      (schedule, scheduleIndex) => (
+                    {tempSchedule[renderDate]
+                      ?.slice(0, 6)
+                      .map((schedule, scheduleIndex) => (
                         <p key={`schedule-${renderDate}-${scheduleIndex}`}>
                           {schedule}
                         </p>
-                      )
+                      ))}
+                    {tempSchedule[renderDate]?.length > 6 && (
+                      <p
+                        className='font-bold mt-[15px]'
+                        onClick={handleClickMore}
+                      >
+                        더보기
+                      </p>
                     )}
                   </td>
                 );

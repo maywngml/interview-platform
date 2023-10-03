@@ -8,7 +8,6 @@ import {
 } from 'react';
 import cn from 'clsx';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import s from './PasswordInput.module.css';
 
 interface PasswordInputProps extends InputHTMLAttributes<HTMLInputElement> {
   className?: string;
@@ -22,6 +21,7 @@ export default function PasswordInput(props: PasswordInputProps) {
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const handleClick = () => {
+    console.log('test');
     setIsVisible((prevVisible) => !prevVisible);
   };
 
@@ -35,12 +35,16 @@ export default function PasswordInput(props: PasswordInputProps) {
 
   return (
     <div
-      className={cn(className, s.passwordWrapper, isFocus && s.focus)}
+      className={cn(
+        className,
+        'flex rounded-[10px] p-[10px] border-solid border-[1px] border-gray-600',
+        isFocus && 'outline-none border-[2px] border-gray-700'
+      )}
       onFocus={handleFocusInOut}
       onBlur={handleFocusInOut}
     >
       <input
-        className={s.password}
+        className='w-full'
         type={isVisible ? 'text' : 'password'}
         value={value}
         onChange={handleChange}
@@ -48,12 +52,12 @@ export default function PasswordInput(props: PasswordInputProps) {
       ></input>{' '}
       {isVisible ? (
         <Visibility
-          className={s.visibilityIcon}
+          className='text-gray-700 cursor-pointer'
           onClick={handleClick}
         />
       ) : (
         <VisibilityOff
-          className={s.visibilityIcon}
+          className='text-gray-700 cursor-pointer'
           onClick={handleClick}
         />
       )}
