@@ -22,10 +22,12 @@ import { selectOptionType } from 'src/types/utils/selectOption';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Button } from '../ui';
+import { useUI } from '../ui/context';
 import { date } from 'src/data/schedule/weekly-schedule';
 
 // TODO: 스케줄 가져오는 함수를 props로 받도록 해야 함
 export default function WeeklySchedule() {
+  const { openModal, setModalView } = useUI();
   const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [currentStartWeekDay, setCurrentStartWeekDay] = useState<Date>(
@@ -109,6 +111,11 @@ export default function WeeklySchedule() {
 
   const handleClickToday = () => {
     changeCurrentMonth(today);
+  };
+
+  const handleClickMore = () => {
+    setModalView('SCHEDULE_VIEW');
+    openModal();
   };
 
   useEffect(() => {
@@ -200,9 +207,9 @@ export default function WeeklySchedule() {
                       ))}
                     {tempSchedule[renderDate]?.length > 6 && (
                       <Link
-                        href={`/hr/schedule/?date=${renderDate}`}
+                        href={`?date=${renderDate}`}
                         className='font-bold mt-[15px]'
-                        scroll={false}
+                        onClick={handleClickMore}
                       >
                         더보기
                       </Link>

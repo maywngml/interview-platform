@@ -1,26 +1,22 @@
 'use client';
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import cn from 'clsx';
 
 export default function Modal({
-  className,
+  onClose,
   children,
 }: {
-  className?: string;
+  onClose: () => void;
   children: React.ReactNode;
 }) {
-  const router = useRouter();
-
   const handlePressEscKey = (e: any) => {
     if (e.keyCode === 27) {
-      router.back();
+      onClose();
     }
   };
 
   const handleClickOuterLayer = (e: any) => {
     if (e.target.className.includes('outer-layer')) {
-      router.back();
+      onClose();
     }
   };
 
@@ -36,9 +32,7 @@ export default function Modal({
       className='outer-layer fixed flex justify-center items-center left-0 top-0 w-full h-full bg-gray-50 z-20'
       onClick={handleClickOuterLayer}
     >
-      <div className={cn(className, 'bg-white  rounded-[20px] p-[40px]')}>
-        {children}
-      </div>
+      <div className='bg-white  rounded-[20px] p-[40px]'>{children}</div>
     </div>
   );
 }
